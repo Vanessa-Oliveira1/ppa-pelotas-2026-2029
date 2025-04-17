@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>PPA Participativo - Pelotas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Plano Plurianual 2026-2029</h1>
+    <p>Pelotas/RS</p>
+  </header>
+
+  <main>
+    <section>
+      <input type="text" id="busca" placeholder="Buscar eixo, objetivo ou programa..." />
+      <div id="estrutura"></div>
+    </section>
+  </main>
+
+  <script>
+    const dados = [
+      {
+        "nome": "Democracia, Cidadania e Justiça Social",
+        "objetivos": [
+          {
+            "nome": "Ampliar e qualificar os espaços de participação e controle social.",
+            "programas": [
+              {
+                "nome": "Gestão Participativa",
+                "justificativa": "Ampliar canais de diálogo com a população.",
+                "objetivo": "Garantir instrumentos de participação efetiva.",
+                "ods": "16,17"
+              }
+            ]
+          },
+          {
+            "nome": "Promover políticas públicas que enfrentam desigualdades.",
+            "programas": [
+              {
+                "nome": "Pelotas das Mulheres",
+                "justificativa": "Reduzir desigualdades de gênero.",
+                "objetivo": "Desenvolver ações com foco em equidade.",
+                "ods": "5,10"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nome": "Cidade Inclusiva e Acessível",
+        "objetivos": [
+          {
+            "nome": "Assegurar mobilidade e acessibilidade para todos.",
+            "programas": [
+              {
+                "nome": "Pelotas Acessível",
+                "justificativa": "Garantir acesso urbano igualitário.",
+                "objetivo": "Promover infraestrutura com acessibilidade.",
+                "ods": "10,11"
+              }
+            ]
+          }
+        ]
+      }
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const estruturaDiv = document.getElementById("estrutura");
+      const buscaInput = document.getElementById("busca");
+
+      renderEstrutura(dados);
+
+      buscaInput.addEventListener("input", () => {
+        const termo = buscaInput.value.toLowerCase();
+        const filtrado = dados.filter(eixo =>
+          eixo.nome.toLowerCase().includes(termo) ||
+          eixo.objetivos.some(obj =>
+            obj.nome.toLowerCase().includes(termo) ||
+            obj.programas.some(p =>
+              p.nome.toLowerCase().includes(termo)
+            )
+          )
+        );
+        renderEstrutura(filtrado);
+      });
+
+      function renderEstrutura(data) {
+        estruturaDiv.innerHTML = "";
+        data.forEach(eixo => {
+          const eixoDiv = document.createElement("div");
+          eixoDiv.className = "eixo";
+          eixoDiv.innerHTML = `<h2>${eixo.nome}</h2>`;
+
+          eixo.objetivos.forEach(obj => {
+            const objDiv = document.createElement("div");
+            objDiv.className = "objetivo";
+            objDiv.innerText = obj.nome;
+
+            obj.programas.forEach(p => {
+              const progDiv = document.createElement("div");
+              progDiv.className = "programa";
+              progDiv.innerHTML = `
+                <p><strong>Programa:</strong> ${p.nome}</p>
+                <p><strong>Justificativa:</strong> ${p.justificativa}</p>
+                <p><strong>Objetivo do Programa:</strong> ${p.objetivo}</p>
+                <div class="ods">${renderODS(p.ods)}</div>
+              `;
+              objDiv.appendChild(progDiv);
+            });
+
+            eixoDiv.appendChild(objDiv);
+          });
+
+          estruturaDiv.appendChild(eixoDiv);
+        });
+      }
+
+      function renderODS(odsStr) {
+        if (!odsStr) return "";
+        const ods = odsStr.split(",").map(n => n.trim());
+        return ods.map(n =>
+          `<img src="https://odsbrasil.gov.br/content/ods/${n}.png" title="ODS ${n}">`
+        ).join("");
+      }
+    });
+  </script>
+</body>
+</html>

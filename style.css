@@ -1,0 +1,52 @@
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+  color: #333;
+}
+
+header {
+  background-color: #0043ce;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+input#busca {
+  width: 90%;
+  padding: 10px;
+  margin: 20px auto;
+  display: block;
+  font-size: 16px;
+}
+
+.eixo {
+  background: white;
+  margin: 10px auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.objetivo {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.programa {
+  margin-left: 20px;
+  margin-bottom: 10px;
+  border-left: 3px solid #0043ce;
+  padding-left: 10px;
+}
+
+.ods {
+  margin-top: 5px;
+}
+.ods img {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+}
